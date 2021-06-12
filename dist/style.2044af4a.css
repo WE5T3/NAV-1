@@ -16,11 +16,11 @@ ol,
 ul {
     list-style: none;
 }
-a{
+a {
     color: inherit;
     text-decoration: none;
 }
-img{
+img {
     max-width: 100%;
     max-height: 100%;
 }
@@ -36,30 +36,30 @@ img{
 /* style */
 
 /* 媒体查询 */
-@media(min-width:500px){   /* PC端媒体  500px以下的不负责 */
-    .searchForm{
+@media (min-width: 500px) {
+    /* PC端媒体  500px以下的不负责 */
+    .searchForm {
         max-width: 500px;
         margin-left: auto;
         margin-right: auto;
     }
-    .siteList{
+    .siteList {
         margin-right: -25px;
         margin-left: 0;
         margin-top: 20px;
         margin-bottom: 20px;
-
     }
-    .globalMain{
+    .globalMain {
         max-width: 900px;
     }
-    .globalHeader{
+    .globalHeader {
         margin: 120px 0 80px;
     }
-    .siteList .site .delete{
+    .siteList .site .delete {
         display: none;
         cursor: default;
     }
-    .siteList .site:hover .delete{
+    .siteList .site:hover .delete {
         display: block;
     }
     .siteList > li {
@@ -67,39 +67,51 @@ img{
     }
 }
 
-@media(max-width:500px){   /* 手机端媒体 500px以上的不负责 */
-    .searchForm{
+@media (max-width: 500px) {
+    /* 手机端媒体 500px以上的不负责 */
+    .searchForm {
         max-width: 400px;
     }
-    .siteList{
+    .siteList {
         margin: 20px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .globalHeader{
+    .globalHeader {
         margin: 20px;
     }
-    
 }
 
 body {
     background-color: #eee;
     /* 当给body设置背景色时 颜色会自动扩充到整个页面上 */
 }
-/* 
-.globalHeader {
-    margin: 20px;
-    
-} */
-.searchForm{
+
+.bcg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    z-index: -10;
+    zoom: 1; /* 缩放属性 */
+    background-color: rgb(255, 255, 255);
+    background-image: url(bcg.c1135439.jpg);
+    background-repeat: no-repeat; /* 设置背景图片 平铺 */
+    background-size: cover; /* 设置背景图片大小 拉伸 */
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-position: center 0;
+}
+
+.searchForm {
     display: flex;
     justify-content: space-between;
 }
 
-
-.globalMain{
-
+.globalMain {
     margin-left: auto;
     margin-right: auto;
 }
@@ -133,7 +145,6 @@ body {
     /* justify-content: space-between; */
 }
 
-
 .siteList .site {
     width: 160px;
     padding: 25px;
@@ -142,17 +153,23 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #fff;
+    background: rgb(119, 193, 222);
+    background: linear-gradient(
+        180deg,
+        rgba(119, 193, 222, 1) 0%,
+        rgba(205, 236, 251, 1) 49%,
+        rgba(205, 236, 251, 1) 51%,
+        rgba(255, 255, 255, 1) 100%
+    );
     margin-bottom: 10px;
     border-radius: 4px;
     position: relative;
 }
 
-.siteList .site > .delete{
+.siteList .site > .delete {
     position: absolute;
     right: 3px;
     top: 0;
-    
 }
 
 .siteList .site > .logo {
@@ -174,7 +191,14 @@ body {
     /* border: 1px solid blue; */
     width: 160px;
     padding: 25px 0;
-    background-color: #fff;
+    background: rgb(119, 193, 222);
+    background: linear-gradient(
+        180deg,
+        rgba(119, 193, 222, 1) 0%,
+        rgba(205, 236, 251, 1) 49%,
+        rgba(205, 236, 251, 1) 51%,
+        rgba(255, 255, 255, 1) 100%
+    );
     display: flex;
     flex-direction: column;
     justify-content: center;
