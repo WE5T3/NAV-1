@@ -89,11 +89,11 @@ window.onbeforeunload = () => {
 }
 
 $(window).on('keypress', (e) => {
-    // const { key } = e  为 const key = e.key 的简写形式 
-    const key = Number(e.key) 
+    // const { key } = e  为 const key = e.key 的简写形式
+    const key = Number(e.key)
     for (let i = 0; i < hashMap.length; i++) {
         if (i === key) {
-            window.open(hashMap[i-1].url)          
+            window.open(hashMap[i - 1].url)
         }
     }
 })

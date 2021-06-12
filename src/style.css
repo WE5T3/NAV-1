@@ -134,21 +134,14 @@ body {
     line-height: 38px;
 }
 
-/* .globalMain {
-} */
-
 .siteList {
     display: flex;
     flex-wrap: wrap;
-    /* margin: 20px; */
-    /* border: 1px solid blue; */
-    /* justify-content: space-between; */
 }
 
 .siteList .site {
     width: 160px;
     padding: 25px;
-    /* border:1px solid red; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,7 +166,6 @@ body {
 }
 
 .siteList .site > .logo {
-    /* border: 1px solid red; */
     width: 64px;
     height: 64px;
     display: flex;
@@ -188,7 +180,6 @@ body {
     margin-bottom: 10px;
 }
 .siteList .addButton {
-    /* border: 1px solid blue; */
     width: 160px;
     padding: 25px 0;
     background: rgb(119, 193, 222);
@@ -214,7 +205,6 @@ body {
     margin-bottom: 10px;
 }
 .siteList .addButton .iconWrapper {
-    /* border: 1px solid; */
     width: 64px;
     height: 64px;
     display: flex;
