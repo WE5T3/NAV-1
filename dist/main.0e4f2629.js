@@ -106,9 +106,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"epB2":[function(require,module,exports) {
 var $siteList = $('.siteList');
 var $lastLi = $siteList.find('li.last');
-var x = localStorage.getItem('x');
-var xObject = JSON.parse(x);
-var hashMap = xObject || [{
+var tagString = localStorage.getItem('tagString');
+var tagObject = JSON.parse(tagString);
+
+var $searchForm = $('.searchForm');
+var $input = $('#input');
+
+var searchForm = document.getElementsByClassName('searchForm');
+var seoBox = document.getElementsByClassName('seoBox');
+// var forms = formbox.getElementsByTagName('form')
+var seoLogo = document.getElementsByClassName('seoLogo');
+var length = seoLogo.length;
+
+seoLogo[0].onclick = function () {
+    if (seoLogo[1].style.display === 'block') {
+        for (var i = 1; i < length; i++) {
+            seoLogo[i].style.display = 'none';
+        }
+    } else {
+        for (var _i = 1; _i < length; _i++) {
+            seoLogo[_i].style.display = 'block';
+        }
+    }
+    $(document).click(function (event) {
+        var withdraw = $('.seoLogo');
+        if (!withdraw.is(event.target) && withdraw.has(event.target).length === 0) {
+            for (var _i2 = 1; _i2 < length; _i2++) {
+                seoLogo[_i2].style.display = 'none';
+            }
+        }
+    });
+};
+
+for (var i = 1; i < length; i++) {
+    seoLogo[i].onclick = function () {
+        return function () {
+            //交换显示的html内容
+            console.log(seoLogo[0]);
+            var temp = seoLogo[0].innerHTML;
+            seoLogo[0].innerHTML = this.innerHTML;
+            this.innerHTML = temp;
+            for (var j = 1; j < length; j++) {
+                seoLogo[j].style.display = 'none';
+            }
+            if (seoLogo[0].innerHTML.indexOf('Baidu') > 0) {
+                $searchForm.attr({
+                    action: 'https://www.baidu.com/s'
+                });
+                $input.attr({
+                    name: 'wd'
+                });
+                console.log('baidu');
+            } else if (seoLogo[0].innerHTML.indexOf('Google') > 0) {
+                $searchForm.attr({
+                    action: 'http://www.google.com/search'
+                });
+                $input.attr({
+                    name: 'q'
+                });
+                console.log('google');
+            } else if (seoLogo[0].innerHTML.indexOf('Bing') > 0) {
+                $searchForm.attr({
+                    action: 'http://www.bing.com/search'
+                });
+                $input.attr({
+                    name: 'q'
+                });
+                console.log('bing');
+            }
+        };
+    }(i);
+}
+
+var hashMap = tagObject || [{
     logo: '\n            <svg class="icon">\n                <use xlink:href="#icon-mdn"></use>\n            </svg>',
     logoType: 'svg',
     url: 'https://developer.mozilla.org/zh-CN'
@@ -147,7 +217,7 @@ $('.addButton').on('click', function () {
     if (url.indexOf('http') !== 0) {
         url = 'https://' + url;
     }
-    console.log(url);
+    // console.log(url)
 
     hashMap.push({
         logo: urlTrim(url)[0].toUpperCase(),
@@ -160,17 +230,22 @@ $('.addButton').on('click', function () {
 });
 window.onbeforeunload = function () {
     var string = JSON.stringify(hashMap);
-    localStorage.setItem('x', string);
+    localStorage.setItem('tagString', string);
 };
 
-$(window).on('keypress', function (e) {
-    // const { key } = e  为 const key = e.key 的简写形式 
-    var key = Number(e.key);
-    for (var i = 0; i < hashMap.length; i++) {
-        if (i === key) {
-            window.open(hashMap[i - 1].url);
+$(document).ready(function () {
+    $('#input').focus();
+});
+
+$('#input').blur(function () {
+    $(document).on('keyup', function (e) {
+        var key = Number(e.key);
+        for (var _i3 = 0; _i3 < hashMap.length + 1; _i3++) {
+            if (_i3 === key) {
+                window.location.href = hashMap[_i3 - 1].url;
+            }
         }
-    }
+    });
 });
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.9b658ddb.map
+//# sourceMappingURL=main.0e4f2629.map
