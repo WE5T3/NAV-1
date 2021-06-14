@@ -12,15 +12,35 @@
         <link rel="stylesheet" href="./style.css" />
     </head>
     <body>
-        <div class="bcg"></div>
+        <div class="title">CC导航</div>
+        <div class="backgroundImage"></div>
         <header class="globalHeader">
             <form
                 class="searchForm"
                 method="get"
                 action="https://www.baidu.com/s"
             >
-                <input name="wd" type="text" />
-                <button type="submit">搜索</button>
+                <div class="seoBox">
+                    <div class="seoLogo">
+                        <svg class="icon" id="sBaidu">
+                            <use xlink:href="#icon-baidu"></use>
+                        </svg>
+                    </div>
+                    <div class="seoLogo" style="display: none">
+                        <svg class="icon" id="sGoogle">
+                            <use xlink:href="#icon-google"></use>
+                        </svg>
+                    </div>
+
+                    <div class="seoLogo" style="display: none">
+                        <svg class="icon" id="sBing">
+                            <use xlink:href="#icon-bing"></use>
+                        </svg>
+                    </div>
+                </div>
+
+                <input name="wd" type="text" id="input" />
+                <button class="searchButton" type="submit">搜索</button>
             </form>
         </header>
         <main class="globalMain">
@@ -37,7 +57,7 @@
                 </li>
             </ul>
         </main>
-        <script src="//at.alicdn.com/t/font_2608276_btve91tdv9d.js"></script>
+        <script src="//at.alicdn.com/t/font_2608276_8cotcbaigl.js"></script>
         <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="./main.js"></script>
     </body>

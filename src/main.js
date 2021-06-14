@@ -1,8 +1,81 @@
 const $siteList = $('.siteList')
 const $lastLi = $siteList.find('li.last')
-const x = localStorage.getItem('x')
-const xObject = JSON.parse(x)
-const hashMap = xObject || [
+const tagString = localStorage.getItem('tagString')
+const tagObject = JSON.parse(tagString)
+
+const $searchForm = $('.searchForm')
+const $input = $('#input')
+
+const searchForm = document.getElementsByClassName('searchForm')
+const seoBox = document.getElementsByClassName('seoBox')
+// var forms = formbox.getElementsByTagName('form')
+const seoLogo = document.getElementsByClassName('seoLogo')
+const length = seoLogo.length
+
+seoLogo[0].onclick = function () {
+    if (seoLogo[1].style.display === 'block') {
+        for (let i = 1; i < length; i++) {
+            seoLogo[i].style.display = 'none'
+        }
+    } else {
+        for (let i = 1; i < length; i++) {
+            seoLogo[i].style.display = 'block'
+        }
+    }
+    $(document).click(function (event) {
+        const withdraw = $('.seoLogo')
+        if (
+            !withdraw.is(event.target) &&
+            withdraw.has(event.target).length === 0
+        ) {
+            for (let i = 1; i < length; i++) {
+                seoLogo[i].style.display = 'none'
+            }
+        }
+    })
+}
+
+for (let i = 1; i < length; i++) {
+    seoLogo[i].onclick = (function () {
+        return function () {
+            //交换显示的html内容
+            console.log(seoLogo[0])
+            var temp = seoLogo[0].innerHTML
+            seoLogo[0].innerHTML = this.innerHTML
+            this.innerHTML = temp
+            for (let j = 1; j < length; j++) {
+                seoLogo[j].style.display = 'none'
+            }
+            if (seoLogo[0].innerHTML.indexOf('Baidu') > 0) {
+                $searchForm.attr({
+                    action: 'https://www.baidu.com/s',
+                })
+                $input.attr({
+                    name: 'wd',
+                })
+                console.log('baidu')
+            } else if (seoLogo[0].innerHTML.indexOf('Google') > 0) {
+                $searchForm.attr({
+                    action: 'http://www.google.com/search',
+                })
+                $input.attr({
+                    name: 'q',
+                })
+                console.log('google')
+            } else if (seoLogo[0].innerHTML.indexOf('Bing') > 0) {
+                $searchForm.attr({
+                    action: 'http://www.bing.com/search',
+                })
+                $input.attr({
+                    name: 'q',
+                })
+                console.log('bing')
+            }
+        }
+    })(i)
+}
+
+const hashMap = tagObject || [
     {
         logo: `
             <svg class="icon">
@@ -72,7 +145,7 @@ $('.addButton').on('click', () => {
     if (url.indexOf('http') !== 0) {
         url = 'https://' + url
     }
-    console.log(url)
+    // console.log(url)
 
     hashMap.push({
         logo: urlTrim(url)[0].toUpperCase(),
@@ -85,15 +158,20 @@ $('.addButton').on('click', () => {
 })
 window.onbeforeunload = () => {
     const string = JSON.stringify(hashMap)
-    localStorage.setItem('x', string)
+    localStorage.setItem('tagString', string)
 }
 
-$(window).on('keypress', (e) => {
-    // const { key } = e  为 const key = e.key 的简写形式
-    const key = Number(e.key)
-    for (let i = 0; i < hashMap.length; i++) {
-        if (i === key) {
-            window.open(hashMap[i - 1].url)
+$(document).ready(function () {
+    $('#input').focus()
+})
+
+$('#input').blur(function () {
+    $(document).on('keyup', (e) => {
+        const key = Number(e.key)
+        for (let i = 0; i < hashMap.length + 1; i++) {
+            if (i === key) {
+                window.location.href = hashMap[i - 1].url
+            }
         }
-    }
+    })
 })
