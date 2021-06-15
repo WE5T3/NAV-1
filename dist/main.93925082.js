@@ -114,7 +114,6 @@ var $input = $('#input');
 
 var searchForm = document.getElementsByClassName('searchForm');
 var seoBox = document.getElementsByClassName('seoBox');
-// var forms = formbox.getElementsByTagName('form')
 var seoLogo = document.getElementsByClassName('seoLogo');
 var length = seoLogo.length;
 
@@ -142,7 +141,7 @@ for (var i = 1; i < length; i++) {
     seoLogo[i].onclick = function () {
         return function () {
             //交换显示的html内容
-            console.log(seoLogo[0]);
+
             var temp = seoLogo[0].innerHTML;
             seoLogo[0].innerHTML = this.innerHTML;
             this.innerHTML = temp;
@@ -156,7 +155,6 @@ for (var i = 1; i < length; i++) {
                 $input.attr({
                     name: 'wd'
                 });
-                console.log('baidu');
             } else if (seoLogo[0].innerHTML.indexOf('Google') > 0) {
                 $searchForm.attr({
                     action: 'http://www.google.com/search'
@@ -164,7 +162,6 @@ for (var i = 1; i < length; i++) {
                 $input.attr({
                     name: 'q'
                 });
-                console.log('google');
             } else if (seoLogo[0].innerHTML.indexOf('Bing') > 0) {
                 $searchForm.attr({
                     action: 'http://www.bing.com/search'
@@ -172,7 +169,6 @@ for (var i = 1; i < length; i++) {
                 $input.attr({
                     name: 'q'
                 });
-                console.log('bing');
             }
         };
     }(i);
@@ -199,7 +195,7 @@ var urlTrim = function urlTrim(url) {
 var render = function render() {
     $siteList.find('li:not(.last)').remove();
     hashMap.forEach(function (node, index) {
-        var $li = $('\n        <li>\n        <a href="' + node.url + '">\n            <div class="site">\n                <div class="logo">' + node.logo + '</div>\n                <div class="link">' + urlTrim(node.url) + '</div>\n                <div class="delete"><svg class="icon">\n                <use xlink:href="#icon-close"></use>\n            </svg></div>\n            </div>\n        </a>\n        </li>').insertBefore($lastLi);
+        var $li = $('\n        <li>\n        <a href="' + node.url + '">\n            <div class="site">\n                <div class="logo">' + node.logo + '</div>\n                <div class="link">' + urlTrim(node.url) + '</div>\n                <div class="delete"><svg class="icon">\n                <use xlink:href="#icon-close1"></use>\n            </svg></div>\n            </div>\n        </a>\n        </li>').insertBefore($lastLi);
 
         $li.on('click', '.delete', function (e) {
             e.preventDefault();
@@ -212,20 +208,22 @@ var render = function render() {
 
 render();
 
+$('.title').on('click', function () {
+    window.alert('\n    tips:\n        1.\u70B9\u51FB\u56FE\u6807\u53EF\u4EE5\u5207\u6362\u5BF9\u5E94\u641C\u7D22\u5F15\u64CE\n        2.\u6309\u4E0B\u6570\u5B57\u952E1-9\u6253\u5F00\u7B2C1-9\u4E2A\u7F51\u9875\n        3.\u70B9\u51FB\'\u65B0\u589E\u7F51\u7AD9\' \u8F93\u5165url,\u5373\u53EF\u4FDD\u5B58 ');
+});
+
 $('.addButton').on('click', function () {
-    var url = window.prompt('输入要添加的网址');
+    var url = window.prompt('请输入要添加的网址');
     if (url.indexOf('http') !== 0) {
         url = 'https://' + url;
     }
     // console.log(url)
-
     hashMap.push({
         logo: urlTrim(url)[0].toUpperCase(),
         logoType: 'text',
         url: url
     });
     // console.log(url)
-
     render();
 });
 window.onbeforeunload = function () {
@@ -234,18 +232,63 @@ window.onbeforeunload = function () {
 };
 
 $(document).ready(function () {
-    $('#input').focus();
+    $('#input').blur();
 });
 
-$('#input').blur(function () {
-    $(document).on('keyup', function (e) {
+var input = document.getElementById('input');
+input.onfocus = function () {
+    if (this.value === '输入并搜索') this.value = '';
+    this.style.color = 'black';
+};
+input.onblur = function () {
+    if (this.value == '') {
+        this.value = '输入并搜索';
+        this.style.color = '#888';
+        this.style.fontSize = 'small';
+    }
+};
+
+$(document).on('keypress', function (e) {
+    var isFocused = document.activeElement === input;
+    if (isFocused === false) {
         var key = Number(e.key);
         for (var _i3 = 0; _i3 < hashMap.length + 1; _i3++) {
             if (_i3 === key) {
                 window.location.href = hashMap[_i3 - 1].url;
             }
         }
-    });
+    }
 });
+
+// console.log(myTime)
+window.onload = function () {
+    //定时器每秒调用一次fnDate()
+    setInterval(function () {
+        fnDate();
+    }, 1000);
+};
+
+function fnDate() {
+
+    var timeDiv1 = document.getElementById('time1');
+    var timeDiv2 = document.getElementById('time2');
+
+    var date = new Date();
+    var year = date.getFullYear(); //当前年份
+    var month = date.getMonth(); //当前月份
+    var data = date.getDate(); //天
+    var hours = date.getHours(); //小时
+    var minute = date.getMinutes(); //分
+    var second = date.getSeconds(); //秒
+    var simpleTime = fnW(hours) + ':' + fnW(minute);
+    var detailTime = year + '-' + fnW(month + 1) + '-' + fnW(data) + ' ' + fnW(hours) + ':' + fnW(minute) + ':' + fnW(second);
+    timeDiv1.innerHTML = simpleTime;
+    timeDiv2.innerHTML = detailTime;
+}
+function fnW(str) {
+    var num = void 0;
+    str >= 10 ? num = str : num = '0' + str;
+    return num;
+}
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.0e4f2629.map
+//# sourceMappingURL=main.93925082.map
