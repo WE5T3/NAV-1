@@ -106,15 +106,59 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"epB2":[function(require,module,exports) {
 var $siteList = $('.siteList');
 var $lastLi = $siteList.find('li.last');
-var tagString = localStorage.getItem('tagString');
-var tagObject = JSON.parse(tagString);
-
 var $searchForm = $('.searchForm');
 var $input = $('#input');
-
+var input = document.getElementById('input');
 var searchForm = document.getElementsByClassName('searchForm');
 var seoBox = document.getElementsByClassName('seoBox');
 var seoLogo = document.getElementsByClassName('seoLogo');
+var $seoLogo = $('.seoLogo');
+var $seoBox = $('.seoBox');
+var tagString = localStorage.getItem('tagString');
+var tagObject = JSON.parse(tagString);
+var tagStringSeo = localStorage.getItem('tagStringSeo');
+var tagObjectSeo = JSON.parse(tagStringSeo);
+
+var hashmapSeo = tagObjectSeo || [{
+    icon: '<svg class="icon" id="sBaidu"><use xlink:href="#icon-baidu"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sGoogle"><use xlink:href="#icon-google"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sBing"><use xlink:href="#icon-bing"></use></svg>'
+}];
+
+var hashMapBd = [{
+    icon: '<svg class="icon" id="sBaidu"><use xlink:href="#icon-baidu"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sGoogle"><use xlink:href="#icon-google"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sBing"><use xlink:href="#icon-bing"></use></svg>'
+}];
+
+var hashMapGg = [{
+    icon: '<svg class="icon" id="sGoogle"><use xlink:href="#icon-google"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sBaidu"><use xlink:href="#icon-baidu"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sBing"><use xlink:href="#icon-bing"></use></svg>'
+}];
+var hashMapBi = [{
+    icon: '<svg class="icon" id="sBing"><use xlink:href="#icon-bing"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sBaidu"><use xlink:href="#icon-baidu"></use></svg>'
+}, {
+    icon: '<svg class="icon" id="sGoogle"><use xlink:href="#icon-google"></use></svg>'
+}];
+
+var renderSeo = function renderSeo() {
+    hashmapSeo.forEach(function (node) {
+        $('<div class="seoLogo" style="display: none">' + node.icon + '</div>').appendTo($seoBox);
+    });
+    seoLogo[0].style.display = 'block';
+};
+
+renderSeo();
+
 var length = seoLogo.length;
 
 seoLogo[0].onclick = function () {
@@ -141,13 +185,13 @@ for (var i = 1; i < length; i++) {
     seoLogo[i].onclick = function () {
         return function () {
             //交换显示的html内容
-
             var temp = seoLogo[0].innerHTML;
             seoLogo[0].innerHTML = this.innerHTML;
             this.innerHTML = temp;
             for (var j = 1; j < length; j++) {
                 seoLogo[j].style.display = 'none';
             }
+
             if (seoLogo[0].innerHTML.indexOf('Baidu') > 0) {
                 $searchForm.attr({
                     action: 'https://www.baidu.com/s'
@@ -155,6 +199,8 @@ for (var i = 1; i < length; i++) {
                 $input.attr({
                     name: 'wd'
                 });
+                hashmapSeo = hashMapBd;
+                renderSeo();
             } else if (seoLogo[0].innerHTML.indexOf('Google') > 0) {
                 $searchForm.attr({
                     action: 'http://www.google.com/search'
@@ -162,6 +208,8 @@ for (var i = 1; i < length; i++) {
                 $input.attr({
                     name: 'q'
                 });
+                hashmapSeo = hashMapGg;
+                renderSeo();
             } else if (seoLogo[0].innerHTML.indexOf('Bing') > 0) {
                 $searchForm.attr({
                     action: 'http://www.bing.com/search'
@@ -169,6 +217,8 @@ for (var i = 1; i < length; i++) {
                 $input.attr({
                     name: 'q'
                 });
+                hashmapSeo = hashMapBi;
+                renderSeo();
             }
         };
     }(i);
@@ -189,17 +239,15 @@ var hashMap = tagObject || [{
 }];
 
 var urlTrim = function urlTrim(url) {
-    return url.replace('https://', '').replace('http://', '').replace('www.', '').replace('.com', '').replace('.cn', '').replace('.org', '').replace(/\/.*/, ''); //删除/开头的内容
+    return url.replace('https://', '').replace('http://', '').replace('www.', '').replace('.com', '').replace('.cn', '').replace('.org', '').replace('.mozilla', '').replace(/\/.*/, ''); //删除/开头的内容
 };
 
 var render = function render() {
     $siteList.find('li:not(.last)').remove();
     hashMap.forEach(function (node, index) {
-        var $li = $('\n        <li>\n        <a href="' + node.url + '">\n            <div class="site">\n                <div class="logo">' + node.logo + '</div>\n                <div class="link">' + urlTrim(node.url) + '</div>\n                <div class="delete"><svg class="icon">\n                <use xlink:href="#icon-close1"></use>\n            </svg></div>\n            </div>\n        </a>\n        </li>').insertBefore($lastLi);
-
+        var $li = $('\n        <li>\n        <a href="' + node.url + '">\n            <div class="site">\n                <div class="logo">' + node.logo + '</div>\n                <div class="link">' + urlTrim(node.url).toUpperCase() + '</div>\n                <div class="delete"><svg class="icon">\n                <use xlink:href="#icon-close1"></use>\n            </svg></div>\n            </div>\n        </a>\n        </li>').insertBefore($lastLi);
         $li.on('click', '.delete', function (e) {
             e.preventDefault();
-            // e.stopPropagation()
             hashMap.splice(index, 1);
             render();
         });
@@ -208,8 +256,8 @@ var render = function render() {
 
 render();
 
-$('.title').on('click', function () {
-    window.alert('\n    tips:\n        1.\u70B9\u51FB\u56FE\u6807\u53EF\u4EE5\u5207\u6362\u5BF9\u5E94\u641C\u7D22\u5F15\u64CE\n        2.\u6309\u4E0B\u6570\u5B57\u952E1-9\u6253\u5F00\u7B2C1-9\u4E2A\u7F51\u9875\n        3.\u70B9\u51FB\'\u65B0\u589E\u7F51\u7AD9\' \u8F93\u5165url,\u5373\u53EF\u4FDD\u5B58 ');
+$('.titleText').on('touchstart', function () {
+    window.alert('\n    tips:\n        1.\u70B9\u51FB\u56FE\u6807\u53EF\u4EE5\u5207\u6362\u5BF9\u5E94\u641C\u7D22\u5F15\u64CE\u3002\n        2.\u70B9\u51FB\'\u65B0\u589E\u7F51\u7AD9\' \u8F93\u5165url,\u5373\u53EF\u4FDD\u5B58\u3002\n        3.\u4F7F\u7528pc\u7AEF\u6D4F\u89C8\u5668\u83B7\u5F97\u66F4\u597D\u4F53\u9A8C\u3002\n        4.\u67E5\u770B\u672C\u7AD9\u6E90\u7801\u8BF7\u70B9\u51FB\'\xA9 2021 WE5T3\'\u3002\n        5.\u67E5\u770B\u672C\u7AD9\u66F4\u65B0\u65E5\u5FD7\u8BF7\u70B9\u51FB\'\u5173\u4E8E\'\u3002\n        ');
 });
 
 $('.addButton').on('click', function () {
@@ -226,26 +274,12 @@ $('.addButton').on('click', function () {
     // console.log(url)
     render();
 });
+
 window.onbeforeunload = function () {
     var string = JSON.stringify(hashMap);
     localStorage.setItem('tagString', string);
-};
-
-$(document).ready(function () {
-    $('#input').blur();
-});
-
-var input = document.getElementById('input');
-input.onfocus = function () {
-    if (this.value === '输入并搜索') this.value = '';
-    this.style.color = 'black';
-};
-input.onblur = function () {
-    if (this.value == '') {
-        this.value = '输入并搜索';
-        this.style.color = '#888';
-        this.style.fontSize = 'small';
-    }
+    var string1 = JSON.stringify(hashmapSeo);
+    localStorage.setItem('tagStringSeo', string1);
 };
 
 $(document).on('keypress', function (e) {
@@ -260,7 +294,6 @@ $(document).on('keypress', function (e) {
     }
 });
 
-// console.log(myTime)
 window.onload = function () {
     //定时器每秒调用一次fnDate()
     setInterval(function () {
@@ -269,10 +302,8 @@ window.onload = function () {
 };
 
 function fnDate() {
-
     var timeDiv1 = document.getElementById('time1');
     var timeDiv2 = document.getElementById('time2');
-
     var date = new Date();
     var year = date.getFullYear(); //当前年份
     var month = date.getMonth(); //当前月份
@@ -285,10 +316,11 @@ function fnDate() {
     timeDiv1.innerHTML = simpleTime;
     timeDiv2.innerHTML = detailTime;
 }
+
 function fnW(str) {
     var num = void 0;
     str >= 10 ? num = str : num = '0' + str;
     return num;
 }
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.93925082.map
+//# sourceMappingURL=main.f1b7c570.map

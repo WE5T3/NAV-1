@@ -6,16 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,viewport-fit=cover">
         <title>CC导航</title>
 
-        <link rel="stylesheet" href="style.36dce3d1.css">
+        <link rel="stylesheet" href="style.bb128995.css">
     </head>
     <body>
         <div class="title">
             <div class="titleText">CC导航</div>
             <div class="tips">
-                tips: <br>
-                1.点击图标可以切换对应搜索引擎<br>
-                2.按下数字键1-9打开第1-9个网页<br>
-                3.点击'新增网站' 输入url,即可保存
+                1.点击图标可以切换对应搜索引擎 <br>
+                2.按下数字键1-9打开第1-9个网页 <br>
+                3.点击'新增网站' 输入url,即可保存标签 <br>
+                4.将鼠标指针悬浮于时间上,可查看当前具体时间 <br>
+                5.查看本站源码请点击'© 2021 WE5T3' <br>
+                6.查看本站更新日志请点击'关于' <br>
             </div>
         </div>
         <div class="backgroundImage"></div>
@@ -25,27 +27,11 @@
                     <div id="time1"></div>
                     <div id="time2"></div>
                 </div>
-                <div class="seoBox">
-                    <div class="seoLogo">
-                        <svg class="icon" id="sBaidu">
-                            <use xlink:href="#icon-baidu"></use>
-                        </svg>
-                    </div>
-                    <div class="seoLogo" style="display: none">
-                        <svg class="icon" id="sGoogle">
-                            <use xlink:href="#icon-google"></use>
-                        </svg>
-                    </div>
-
-                    <div class="seoLogo" style="display: none">
-                        <svg class="icon" id="sBing">
-                            <use xlink:href="#icon-bing"></use>
-                        </svg>
-                    </div>
-                </div>
-
-                <input name="wd" type="text" autocomplete="off" id="input">
-                <button class="searchButton" type="submit">搜索</button>
+                <div class="seoBox"></div>
+                <input name="wd" type="text" autocomplete="off" id="input" placeholder="输入并搜索">
+                <button class="searchButton" type="submit" id="searchButton">
+                    搜索
+                </button>
             </form>
         </header>
         <main class="globalMain">
@@ -62,17 +48,21 @@
                 </li>
             </ul>
         </main>
-        <footer>
+        <footer class="globalFooter">
             <div class="footerBox">
-                <a href="https://github.com/WE5T3" title="github.WE5T3" target="_blank" class="links">© 2021 WE5T3
-                </a>
+                <div class="githubLink linkBox">
+                    <a href="https://github.com/WE5T3" title="github_WE5T3" target="_blank" class="footerLinks">© 2021 WE5T3
+                    </a>
+                </div>
                 <span> 丨 </span>
-                <a href="https://github.com/WE5T3/NAV-1/blob/master/updateLog.md" title="关于&更新日志" target="_blank" class="links" id="linkAbout">关于
-                </a>
+                <div class="aboutLink linkBox">
+                    <a href="https://github.com/WE5T3/NAV-1/blob/master/updateLog.md" title="关于&更新日志" target="_blank" class="footerLinks">关于
+                    </a>
+                </div>
             </div>
         </footer>
         <script src="//at.alicdn.com/t/font_2608276_7dvsl3kal3t.js"></script>
         <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="main.93925082.js"></script>
+        <script src="main.f1b7c570.js"></script>
     </body>
 </html>
